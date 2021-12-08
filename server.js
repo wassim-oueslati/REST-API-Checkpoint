@@ -1,10 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router=express.Router();
+// const router=express.Router();
 const User = require('./models/User');
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
 
 
 //Create and Save a Record of a Model:
@@ -17,8 +17,8 @@ console.log(users )
 
 
 //GET :  RETURN ALL USERS 
-router.get('/get',(req,res)=>{
-    users.find(function(err,allUsers){
+app.get('/get',(req,res)=>{
+    User.find(function(err,allUsers){
         if(err){
             console.log(err)
         }
@@ -30,8 +30,8 @@ router.get('/get',(req,res)=>{
 
 
 //POST :  ADD A NEW USER TO THE DATABASE
-router.post('/add',(req,res,next)=>{
-    users.create(req.body, function (err, post) {
+app.post('/add',(req,res,next)=>{
+    User.create(req.body, function (err, post) {
         if (err) return next(err);
         res.json(post);
     });    
@@ -39,8 +39,8 @@ router.post('/add',(req,res,next)=>{
 
 
 //PUT : EDIT A USER BY ID 
-router.put('/:id', function(req, res,next) {
-    users.findByIdAndUpdate(req.params.id, req.body, function (err, editt) {
+app.put('/:id', function(req, res,next) {
+    User.findByIdAndUpdate(req.params.id, req.body, function (err, editt) {
       if (err) return next(err);
       res.json(editt);
     });
@@ -48,8 +48,8 @@ router.put('/:id', function(req, res,next) {
 
 
 //DELETE : REMOVE A USER BY ID 
-router.delete('/:id',function(req,res,next){
-    users.findByIdAndRemove(req.params.id,req.body,function(err,deleted){
+app.delete('/:id',function(req,res,next){
+    User.findByIdAndRemove(req.params.id,req.body,function(err,deleted){
         if (err) return next(err);
         res.json(deleted);
     })
@@ -66,6 +66,8 @@ const connectDB = async ()=>{
     console.log('connected');
 }
 connectDB()
+
+
 
 // app.use('/server',require('../REST_API/server'))
 
